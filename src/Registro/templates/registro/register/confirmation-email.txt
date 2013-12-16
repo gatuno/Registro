@@ -1,0 +1,25 @@
+Hola,
+
+Has solicitado la creación de una cuenta para
+participar en los cursos de invierno.
+
+Para confirmar esta cuenta por favor sigue el enlace:
+
+{$url|safe}
+
+Alternativamente, puedes ir a esta página:
+
+{$urlik|safe}
+
+y escribir la siguiente código de confirmación:
+
+{$key}
+
+Si ya no estás interesado en participar en
+los cursos de invierno o no recuerdas haber
+solicitado la creación de una cuenta,
+por favor disculpa las molestias e ignora
+este correo.
+
+Atte,
+Los cursos de invierno
