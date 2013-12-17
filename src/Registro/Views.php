@@ -5,7 +5,7 @@ Gatuf::loadFunction('Gatuf_Shortcuts_RenderToResponse');
 
 class Registro_Views {
 	function index ($request, $match) {
-		return Gatuf_Shortcuts_RenderToResponse ('calif/index.html', array (), $request);
+		return Gatuf_Shortcuts_RenderToResponse ('registro/index.html', array (), $request);
 	}
 	
 	function login ($request, $match, $success_url = '', $extra_context=array()) {
@@ -46,7 +46,7 @@ class Registro_Views {
 		$context = new Gatuf_Template_Context_Request ($request, array ('page_title' => 'Ingresar',
 		'_redirect_after' => $success_url,
 		'error' => $error));
-		$tmpl = new Gatuf_Template ('calif/login_form.html');
+		$tmpl = new Gatuf_Template ('registro/login_form.html');
 		return new Gatuf_HTTP_Response ($tmpl->render ($context));
 	}
 	
@@ -79,7 +79,7 @@ class Registro_Views {
 			if (isset($request->GET['login'])) {
 				$params['initial'] = array('login' => $request->GET['login']);
 			}
-			$form = new Gatuf_Form_Register(null, $params);
+			$form = new Registro_Form_Register(null, $params);
 		}
 		$context = new Gatuf_Template_Context(array());
 		$tmpl = new Gatuf_Template('registro/terms.html');
@@ -89,8 +89,60 @@ class Registro_Views {
 		                                         'form' => $form,
 		                                         'terms' => $terms),
 		                                         $request);
-		}
+	}
     
+	function registerInputKey($request, $match) {
+		$title = 'Confirma la creación de tu cuenta';
+		if ($request->method == 'POST') {
+			$form = new Registro_Form_RegisterInputKey($request->POST);
+			if ($form->isValid()) {
+			$url = $form->save();
+				return new Gatuf_HTTP_Response_Redirect($url);
+			}
+		} else {
+			$form = new Registro_Form_RegisterInputKey();
+		}
+		return Gatuf_Shortcuts_RenderToResponse('registro/register/inputkey.html', 
+		                                         array('page_title' => $title,
+		                                         'form' => $form),
+		                                         $request);
+	}
+	
+	function registerConfirmation($request, $match) {
+		$title = 'Confirma la creación de tu cuenta';
+		$key = $match[1];
+		// first "check", full check is done in the form.
+		$email_id = Registro_Form_RegisterInputKey::checkKeyHash($key);
+		if (false == $email_id) {
+			$url = Gatuf_HTTP_URL_urlForView('Registro_Views::registerInputKey');
+			return new Gatuf_HTTP_Response_Redirect($url);
+		}
+		$user = new Registro_User($email_id[1]);
+		$extra = array('key' => $key,
+		'user' => $user);
+		if ($request->method == 'POST') {
+			$form = new Registro_Form_RegisterConfirmation($request->POST, $extra);
+			if ($form->isValid()) {
+				$user = $form->save();
+				$request->user = $user;
+				$request->session->clear();
+				$request->session->setData('login_time', gmdate('Y-m-d H:i:s'));
+				$user->last_login = gmdate('Y-m-d H:i:s');
+				$user->update();
+				$request->user->setMessage(1, '¡Bienvenido! Ahora puedes participar en el curso de invierno de tu elección');
+				$url = Gatuf_HTTP_URL_urlForView('Registro_Views::index');
+				return new Gatuf_HTTP_Response_Redirect($url);
+			}
+		} else {
+			$form = new Registro_Form_RegisterConfirmation(null, $extra);
+		}
+		return Gatuf_Shortcuts_RenderToResponse('registro/register/confirmation.html', 
+		                                         array('page_title' => $title,
+		                                         'new_user' => $user,
+		                                         'form' => $form),
+		                                         $request);
+	}
+	
 	function passwordRecoveryAsk ($request, $match) {
 		$title = 'Recuperar contraseña';
 		
@@ -104,7 +156,7 @@ class Registro_Views {
 			$form = new Registro_Form_Password ();
 		}
 		
-		return Gatuf_Shortcuts_RenderToResponse ('calif/user/recuperarcontra-ask.html',
+		return Gatuf_Shortcuts_RenderToResponse ('registro/user/recuperarcontra-ask.html',
 		                                         array ('page_title' => $title,
 		                                         'form' => $form),
 		                                         $request);
@@ -122,7 +174,7 @@ class Registro_Views {
 		 	$form = new Registro_Form_PasswordInputKey ();
 		}
 		
-		return Gatuf_Shortcuts_RenderToResponse ('calif/user/recuperarcontra-codigo.html',
+		return Gatuf_Shortcuts_RenderToResponse ('registro/user/recuperarcontra-codigo.html',
 		                                         array ('page_title' => $title,
 		                                         'form' => $form),
 		                                         $request);
@@ -157,7 +209,7 @@ class Registro_Views {
 		} else {
 			$form = new Registro_Form_PasswordReset (null, $extra);
 		}
-		return Gatuf_Shortcuts_RenderToResponse ('calif/user/recuperarcontra.html',
+		return Gatuf_Shortcuts_RenderToResponse ('registro/user/recuperarcontra.html',
 		                                         array ('page_title' => $title,
 		                                         'new_user' => $user,
 		                                         'form' => $form),

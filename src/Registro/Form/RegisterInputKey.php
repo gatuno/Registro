@@ -68,7 +68,7 @@ class Registro_Form_RegisterInputKey extends Gatuf_Form {
 		if (!$this->isValid()) {
 			throw new Exception('Cannot save an invalid form.');
 		}
-		return Gatuf_HTTP_URL_urlForView('Gatuf_Views::registerConfirmation',
+		return Gatuf_HTTP_URL_urlForView('Registro_Views::registerConfirmation',
 										array($this->cleaned_data['key']));
 	}
 
@@ -83,10 +83,10 @@ class Registro_Form_RegisterInputKey extends Gatuf_Form {
 	public static function checkKeyHash($key) {
 		$hash = substr($key, 0, 2);
 		$encrypted = substr($key, 2);
-		if ($hash != substr(md5(Gatuf::f('secret_key').$encrypted), 0, 2)) {
+		if ($hash != substr(md5(Gatuf::config('secret_key').$encrypted), 0, 2)) {
 			return false;
 		}
-		$cr = new Gatuf_Crypt(md5(Gatuf::f('secret_key')));
+		$cr = new Gatuf_Crypt(md5(Gatuf::config('secret_key')));
 		return explode(':', $cr->decrypt($encrypted), 2);
 	}
 }

@@ -41,7 +41,7 @@ class Registro_Form_Register extends Gatuf_Form {
 				'max_length' => 15,
 				'min_length' => 3,
 				'initial' => $login,
-				'help_text' => 'Tu login debe ser entre 3 y 15 caracteres de largo y contener solamente dígitos y letras.'),
+				'help_text' => 'Tu login debe ser entre 3 y 15 caracteres de largo y contener solamente dígitos y letras.',
 				'widget_attrs' => array(
 					'maxlength' => 15,
 					'size' => 10,
@@ -58,7 +58,7 @@ class Registro_Form_Register extends Gatuf_Form {
 		$this->fields['terms'] = new Gatuf_Form_Field_Boolean (
 			array (
 				'required' => true,
-				'label' => 'Yo acepto los términos y condiciones de los cursos de invierno.',
+				'label' => 'Acepto los términos y condiciones de los cursos de invierno.',
 				'initial' => '',
 		));
 	}
@@ -124,15 +124,14 @@ class Registro_Form_Register extends Gatuf_Form {
 		return $user;
 	}
 
-	public static function sendVerificationEmail($user)
-	{
+	public static function sendVerificationEmail($user) {
 		Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 		$from_email = Gatuf::config('from_email');
 		$cr = new Gatuf_Crypt(md5(Gatuf::config('secret_key')));
 		$encrypted = trim($cr->encrypt($user->email.':'.$user->id), '~');
 		$key = substr(md5(Gatuf::config('secret_key').$encrypted), 0, 2).$encrypted;
-		$url = Gatuf::config('url_base').Gatuf_HTTP_URL_urlForView('Gatuf_Views::registerConfirmation', array($key), array(), false);
-		$urlik = Gatuf::config('url_base').Gatuf_HTTP_URL_urlForView('Gatuf_Views::registerInputKey', array(), array(), false);
+		$url = Gatuf::config('url_base').Gatuf_HTTP_URL_urlForView('Registro_Views::registerConfirmation', array($key), array(), false);
+		$urlik = Gatuf::config('url_base').Gatuf_HTTP_URL_urlForView('Registro_Views::registerInputKey', array(), array(), false);
 		$context = new Gatuf_Template_Context(
 			 array('key' => $key,
 				   'url' => $url,
@@ -143,7 +142,7 @@ class Registro_Form_Register extends Gatuf_Form {
 		$tmpl = new Gatuf_Template('registro/register/confirmation-email.txt');
 		$text_email = $tmpl->render($context);
 		$email = new Gatuf_Mail($from_email, $user->email,
-							   'Confirm the creation of your account.');
+							   'Cursos de Invierno - Confirma tu cuenta');
 		$email->addTextMessage($text_email);
 		$email->sendMail();
 	}

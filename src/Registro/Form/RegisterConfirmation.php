@@ -69,7 +69,7 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 				'label' => 'Your password',
 				'initial' => '',
 				'widget' => 'Gatuf_Form_Widget_PasswordInput',
-				'help_text' => 'Tu contraseña debe ser difícil de encontrar para otras personas, pero fácil de recordar para tí.'),
+				'help_text' => 'Tu contraseña debe ser difícil de encontrar para otras personas, pero fácil de recordar para tí.',
 				'widget_attrs' => array (
 					'maxlength' => 50,
 					'size' => 15,
@@ -105,7 +105,7 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 			throw new Gatuf_Form_Invalid($error);
 		}
 		if ($users[0]->active) {
-			throw new Gatuf_Form_Invalid('Esta cuenta ya está activada. FIXME: Deberías probar a recuperar tu contraseña.'));
+			throw new Gatuf_Form_Invalid('Esta cuenta ya está activada. FIXME: Deberías probar a recuperar tu contraseña.');
 		}
 		$this->_user_id = $email_id[1];
 		return $this->cleaned_data['key'];

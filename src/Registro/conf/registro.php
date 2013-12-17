@@ -109,6 +109,8 @@ $cfg['middleware_classes'] = array(
 	'Gatuf_Middleware_Session',
 );
 
-$cfg['installed_apps'] = array('Gatuf', 'Registro');
+$cfg['gatuf_custom_user'] = 'Registro_User';
+
+$cfg['installed_apps'] = array('Gatuf', 'Calif', 'Registro');
 
 return $cfg;
