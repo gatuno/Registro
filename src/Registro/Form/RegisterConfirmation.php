@@ -66,7 +66,7 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 		$this->fields['password'] = new Gatuf_Form_Field_Varchar(
 			array(
 				'required' => true,
-				'label' => 'Your password',
+				'label' => 'Tu contraseña',
 				'initial' => '',
 				'widget' => 'Gatuf_Form_Widget_PasswordInput',
 				'help_text' => 'Tu contraseña debe ser difícil de encontrar para otras personas, pero fácil de recordar para tí.',
@@ -110,8 +110,28 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 		));
 		
 		$choices = array ();
-		foreach (Gatuf::factory ('Calif_Carrera')->getList () as $carrera) {
-		    $choices[$carrera->descripcion] = $carrera->clave;
+		
+		$choices ['Otra carrera'] = array ();
+		$c = new Calif_Carrera ('A1');
+		$choices ['Otra carrera'][$c->descripcion] = $c->clave;
+		
+		$sql = new Gatuf_SQL ('clave LIKE %s', 'A%');
+		$choices ['Secundaria y Media Superior'] = array ();
+		foreach (Gatuf::factory ('Calif_Carrera')->getList (array ('filter' => $sql->gen ())) as $carrera) {
+		    if ($carrera->clave == 'A1') continue;
+		    $choices ['Secundaria y Media Superior'][$carrera->descripcion] = $carrera->clave;
+		}
+		
+		$sql = new Gatuf_SQL ('clave NOT LIKE %s AND clave NOT LIKE %s', array ('A%', 'Z%'));
+		$choices ['Centro Universitario de Ciencias Exactas e Ingenierias'] = array ();
+		foreach (Gatuf::factory ('Calif_Carrera')->getList (array ('filter' => $sql->gen ())) as $carrera) {
+		    $choices ['Centro Universitario de Ciencias Exactas e Ingenierias'][$carrera->descripcion] = $carrera->clave;
+		}
+		
+		$sql = new Gatuf_SQL ('clave LIKE %s', 'Z%');
+		$choices ['Otras'] = array ();
+		foreach (Gatuf::factory ('Calif_Carrera')->getList (array ('filter' => $sql->gen ())) as $carrera) {
+		    $choices ['Otras'][$carrera->descripcion] = $carrera->clave;
 		}
 		
 		$this->fields['carrera'] = new Gatuf_Form_Field_Varchar (
@@ -122,6 +142,16 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 		        'widget' => 'Gatuf_Form_Widget_SelectInput',
 		        'widget_attrs' => array (
 		            'choices' => $choices,
+		        ),
+		));
+		
+		$this->fields['desc_carrera'] = new Gatuf_Form_Field_Varchar (
+		    array (
+		        'required' => false,
+		        'label' => 'Nombre de la carrera',
+		        'initial' => '',
+		        'widget_attrs' => array (
+		            'size' => 20,
 		        ),
 		));
 	}
@@ -165,6 +195,12 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 		        throw new Gatuf_Form_Invalid ('Debes indicar tu escuela de procedencia');
 		    }
 		}
+		
+		if ($this->cleaned_data['carrera'] == 'A1') {
+		    if (!isset ($this->cleaned_data ['desc_carrera']) || $this->cleaned_data ['desc_carrera'] == '') {
+		        throw new Gatuf_Form_Invalid ('Debes indicar tu carrera');
+		    }
+		}
 		return $this->cleaned_data;
 	}
 
@@ -184,7 +220,17 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 		$this->_user->administrator = false;
 		$this->_user->staff = false;
 		
-		$this->_user->carrera = new Calif_Carrera ($this->cleaned_data['carrera']);
+		if ($this->cleaned_data['carrera'] == 'A1') {
+		    $carrera = new Calif_Carrera ();
+		    $carrera->clave = 'Z'. (Calif_Carrera::maxZID () + 1);
+		    $carrera->descripcion = $this->cleaned_data ['desc_carrera'];
+		    
+		    $carrera->create ();
+		} else {
+		    $carrera = new Calif_Carrera ($this->cleaned_data ['carrera']);
+		}
+		
+		$this->_user->carrera = $carrera;
 		
 		if ($this->cleaned_data['udg']) {
 		    $this->_user->codigo = $this->cleaned_data ['codigo'];

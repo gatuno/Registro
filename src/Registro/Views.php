@@ -12,7 +12,7 @@ class Registro_Views {
 		if (!empty($request->REQUEST['_redirect_after'])) {
 			$success_url = $request->REQUEST['_redirect_after'];
 		} else {
-			$success_url = Gatuf::config('Registro_base').Gatuf::config ('login_success_url', '/');
+			$success_url = Gatuf::config('registro_base').Gatuf::config ('login_success_url', '/');
 		}
 		
 		$error = '';
@@ -25,7 +25,7 @@ class Registro_Views {
 			}
 			
 			if (false === $user) {
-				$error = 'The login or the password is not valid. El login y la contraseña son sensibles a las mayúsculas';
+				$error = 'El usuario o la contraseña no son válidos. El usuario y la contraseña son sensibles a las mayúsculas';
 			} else {
 				if (!$request->session->getTestCookie ()) {
 					$error = 'Necesitas habilitar las cookies para acceder a este sitio';
@@ -59,7 +59,7 @@ class Registro_Views {
 		$request->session->setData ('logout_time', gmdate('Y-m-d H:i:s'));
 		if (0 !== strpos ($success_url, 'http')) {
 			$murl = new Gatuf_HTTP_URL ();
-			$success_url = Gatuf::config('Registro_base').$murl->generate($success_url);
+			$success_url = Gatuf::config('registro_base').$murl->generate($success_url);
 		}
 		
 		return new Gatuf_HTTP_Response_Redirect ($success_url);

@@ -52,4 +52,16 @@ class Calif_Carrera extends Gatuf_Model {
 			$p->delete ();
 		}
 	}
+	
+	static function maxZID () {
+		$carrera = Gatuf::factory ('Calif_Carrera')->getList (array ('nb' => 1, 'start' => 0, 'order' => 'clave DESC'));
+		
+		if (!preg_match ('/^Z(\d+)$/', $carrera[0]->clave, $matches)) {
+			$id = 0;
+		} else {
+			$id = $matches[1];
+		}
+		
+		return (int) $id;
+	}
 }

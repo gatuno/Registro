@@ -52,6 +52,17 @@
 			<span class="helptext">{$form.f.carrera.help_text}</span>
 			</td>
 		</tr>
+	</tbody>
+	<tbody id="div_carrera">
+		<tr>
+			<th><strong>{$form.f.desc_carrera.labelTag}:</strong></th>
+			<td>{if $form.f.desc_carrera.errors}{$form.f.desc_carrera.fieldErrors}{/if}
+			{$form.f.desc_carrera|safe}<br />
+			<span class="helptext">{$form.f.desc_carrera.help_text}</span>
+			</td>
+		</tr>
+	</tbody>
+	<tbody>
 		<tr>
 			<th><strong>{$form.f.udg.labelTag}:</strong></th>
 			<td>{if $form.f.udg.errors}{$form.f.udg.fieldErrors}{/if}
@@ -105,10 +116,25 @@ document.getElementById('id_first_name').focus();
 		}
 	}
 	
+	function on_change_carrera () {
+		var carrera = document.getElementById ('id_carrera').value;
+		
+		if (carrera == 'A1') {
+			$('#div_carrera').fadeIn (1000);
+		} else {
+			$('#div_carrera').fadeOut (0);
+		}
+	}
+	
 	var check = document.getElementById ('id_udg');
 	
 	check.onchange = on_change_udg;
 	on_change_udg ();
+	
+	var carrera = document.getElementById ('id_carrera');
+	
+	carrera.onchange = on_change_carrera;
+	on_change_carrera ();
 // ]]>
 {/literal}
 </script>
