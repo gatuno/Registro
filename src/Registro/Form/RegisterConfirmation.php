@@ -87,6 +87,43 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 					'size' => 15,
 				),
 		));
+		
+		$this->fields['udg'] = new Gatuf_Form_Field_Boolean (
+		    array (
+		        'required' => false,
+		        'label' => 'Estudiante U de G',
+		        'initial' => true,
+		));
+		
+		$this->fields['codigo'] = new Gatuf_Form_Field_Varchar (
+		    array (
+		        'required' => false,
+		        'label' => 'Código U de G',
+		        'initial' => '',
+		));
+		
+		$this->fields['escuela'] = new Gatuf_Form_Field_Varchar (
+		    array (
+		        'required' => false,
+		        'label' => 'Escuela de procedencia',
+		        'initial' => '',
+		));
+		
+		$choices = array ();
+		foreach (Gatuf::factory ('Calif_Carrera')->getList () as $carrera) {
+		    $choices[$carrera->descripcion] = $carrera->clave;
+		}
+		
+		$this->fields['carrera'] = new Gatuf_Form_Field_Varchar (
+		    array (
+		        'required' => true,
+		        'label' => 'Carrera',
+		        'initial' => '',
+		        'widget' => 'Gatuf_Form_Widget_SelectInput',
+		        'widget_attrs' => array (
+		            'choices' => $choices,
+		        ),
+		));
 	}
 
 	/**
@@ -118,6 +155,16 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 		if ($this->cleaned_data['password'] != $this->cleaned_data['password2']) {
 			throw new Gatuf_Form_Invalid('Las dos contraseñas deben coincidir.');
 		}
+		
+		if ($this->cleaned_data['udg']) {
+		    if (!preg_match ('/^\w\d{8}$/', $this->cleaned_data['codigo'])) {
+		        throw new Gatuf_Form_Invalid ('Si eres estudiante de la Universidad de Guadalajara debes proporcionar tu código');
+		    }
+		} else {
+		    if (!isset ($this->cleaned_data ['escuela']) || $this->cleaned_data ['escuela'] == '') {
+		        throw new Gatuf_Form_Invalid ('Debes indicar tu escuela de procedencia');
+		    }
+		}
 		return $this->cleaned_data;
 	}
 
@@ -136,6 +183,17 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 		$this->_user->active = true;
 		$this->_user->administrator = false;
 		$this->_user->staff = false;
+		
+		$this->_user->carrera = new Calif_Carrera ($this->cleaned_data['carrera']);
+		
+		if ($this->cleaned_data['udg']) {
+		    $this->_user->codigo = $this->cleaned_data ['codigo'];
+		    $this->_user->escuela = 'Universidad de Guadalajara';
+		} else {
+		    $this->_user->codigo = null;
+		    $this->_user->escuela = $this->cleaned_data ['escuela'];
+		}
+		
 		if ($commit) {
 			$this->_user->update();
 			/**

@@ -11,49 +11,110 @@
 {/if}
 <form method="post" action=".">
 <table class="form" summary="">
-<tr>
-<th><strong>Login:</strong></th>
-<td>{$new_user.login}</td>
-</tr>
-<tr>
-<th><strong>Email:</strong></th>
-<td>{$new_user.email}</td>
-</tr>
-<tr>
-<th>{$form.f.first_name.labelTag}:</th>
-<td>{if $form.f.first_name.errors}{$form.f.first_name.fieldErrors}{/if}
-{$form.f.first_name|unsafe}
-</td>
-</tr>
-<tr>
-<th><strong>{$form.f.last_name.labelTag}:</strong></th>
-<td>{if $form.f.last_name.errors}{$form.f.last_name.fieldErrors}{/if}
-{$form.f.last_name|unsafe}
-</td>
-</tr>
-<tr>
-<th><strong>{$form.f.password.labelTag}:</strong></th>
-<td>{if $form.f.password.errors}{$form.f.password.fieldErrors}{/if}
-{$form.f.password|unsafe}<br />
-<span class="helptext">{$form.f.password.help_text}</span>
-</td>
-</tr>
-<tr>
-<th><strong>{$form.f.password2.labelTag}:</strong></th>
-<td>{if $form.f.password2.errors}{$form.f.password2.fieldErrors}{/if}
-{$form.f.password2|unsafe}
-</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td><input type="submit" value="Activar tu cuenta" name="submit" /> | <a href="{url 'Registro_Views::index'}">Cancelar</a>
-</td>
-</tr>
+	<tbody>
+		<tr>
+			<th><strong>Login:</strong></th>
+			<td>{$new_user.login}</td>
+			</tr>
+			<tr>
+			<th><strong>Email:</strong></th>
+			<td>{$new_user.email}</td>
+		</tr>
+		<tr>
+			<th>{$form.f.first_name.labelTag}:</th>
+			<td>{if $form.f.first_name.errors}{$form.f.first_name.fieldErrors}{/if}
+			{$form.f.first_name|unsafe}
+			</td>
+		</tr>
+		<tr>
+			<th><strong>{$form.f.last_name.labelTag}:</strong></th>
+			<td>{if $form.f.last_name.errors}{$form.f.last_name.fieldErrors}{/if}
+			{$form.f.last_name|unsafe}
+			</td>
+		</tr>
+		<tr>
+			<th><strong>{$form.f.password.labelTag}:</strong></th>
+			<td>{if $form.f.password.errors}{$form.f.password.fieldErrors}{/if}
+			{$form.f.password|unsafe}<br />
+			<span class="helptext">{$form.f.password.help_text}</span>
+			</td>
+		</tr>
+		<tr>
+			<th><strong>{$form.f.password2.labelTag}:</strong></th>
+			<td>{if $form.f.password2.errors}{$form.f.password2.fieldErrors}{/if}
+			{$form.f.password2|unsafe}
+			</td>
+		</tr>
+		<tr>
+			<th><strong>{$form.f.carrera.labelTag}:</strong></th>
+			<td>{if $form.f.carrera.errors}{$form.f.carrera.fieldErrors}{/if}
+			{$form.f.carrera|safe}<br />
+			<span class="helptext">{$form.f.carrera.help_text}</span>
+			</td>
+		</tr>
+		<tr>
+			<th><strong>{$form.f.udg.labelTag}:</strong></th>
+			<td>{if $form.f.udg.errors}{$form.f.udg.fieldErrors}{/if}
+			{$form.f.udg|safe}<br />
+			<span class="helptext">{$form.f.udg.help_text}</span>
+			</td>
+		</tr>
+	</tbody>
+	<tbody id="div_es_udg">
+		<tr>
+			<th><strong>{$form.f.codigo.labelTag}:</strong></th>
+			<td>{if $form.f.codigo.errors}{$form.f.codigo.fieldErrors}{/if}
+			{$form.f.codigo|safe}<br />
+			<span class="helptext">{$form.f.codigo.help_text}</span>
+			</td>
+		</tr>
+	</tbody>
+	<tbody id="div_fuera">
+		<tr>
+			<th><strong>{$form.f.escuela.labelTag}:</strong></th>
+			<td>{if $form.f.escuela.errors}{$form.f.escuela.fieldErrors}{/if}
+			{$form.f.escuela|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.escuela.help_text}</span> -->
+			</td>
+		</tr>
+	</tbody>
+	<tbody>
+		<tr>
+			<td>&nbsp;</td>
+			<td><input type="submit" value="Activar tu cuenta" name="submit" /> | <a href="{url 'Registro_Views::index'}">Cancelar</a>
+			</td>
+		</tr>
+	</tbody>
 </table>{$form.f.key|unsafe}
 </form>
 {/block}
 {block javascript}<script type="text/javascript">
-document.getElementById('id_first_name').focus()
+document.getElementById('id_first_name').focus();
+
+{literal}
+//<![CDATA[
+	function on_change_udg () {
+		var udg = document.getElementById ('id_udg').checked;
+		
+		if (udg) {
+			$('#div_fuera').fadeOut (0);
+			$('#div_es_udg').fadeIn (1000);
+		} else {
+			$('#div_es_udg').fadeOut (0);
+			$('#div_fuera').fadeIn (1000);
+		}
+	}
+	
+	var check = document.getElementById ('id_udg');
+	
+	check.onchange = on_change_udg;
+	on_change_udg ();
+// ]]>
+{/literal}
 </script>
 {/block}
-
+{block extrahead}
+<link rel="stylesheet" media="all" type="text/css" href="{media}/css/smoothness/jquery-ui-1.8.16.custom.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+{/block}

@@ -21,6 +21,13 @@ class Registro_User extends Gatuf_User {
 			'default' => null,
 		);
 		
+		$this->_a['cols']['escuela'] = array (
+			'type' => 'Gatuf_DB_Field_Varchar',
+			'blank' => false,
+			'is_null' => true,
+			'default' => null,
+		);
+		
 		/* Poner demás cosas */
 	}
 }
