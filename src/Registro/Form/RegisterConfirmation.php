@@ -196,7 +196,7 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 		    }
 		}
 		
-		if ($this->cleaned_data['carrera'] == 'A1') {
+		if ($this->cleaned_data['carrera'] == 'A3') {
 		    if (!isset ($this->cleaned_data ['desc_carrera']) || $this->cleaned_data ['desc_carrera'] == '') {
 		        throw new Gatuf_Form_Invalid ('Debes indicar tu carrera');
 		    }
