@@ -57,4 +57,17 @@ class Registro_Views_Curso {
 		                                         'form' => $form),
 		                                         $request);
 	}
+	
+	public function verCurso ($request, $match) {
+		$curso = new Registro_Curso ();
+		
+		if ($curso->get ($match[1]) === false) {
+			return new Gatuf_HTTP_Error404();
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse('registro/curso/ver.html', 
+		                                         array('page_title' => 'Curso: '.$curso->titulo,
+		                                         'curso' => $curso),
+		                                         $request);
+	}
 }

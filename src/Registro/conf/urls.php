@@ -91,4 +91,11 @@ $ctl[] = array (
 	'method' => 'agregar'
 );
 
+$ctl[] = array (
+	'regex' => '#^/curso/(\d+)/$#',
+	'base' => $base,
+	'model' => 'Registro_Views_Curso',
+	'method' => 'verCurso'
+);
+
 return $ctl;

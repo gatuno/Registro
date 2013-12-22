@@ -41,13 +41,13 @@ class Registro_Curso extends Gatuf_Model {
 			array (
 			       'type' => 'Gatuf_DB_Field_Manytomany',
 			       'model' => 'Registro_User',
-			       'relate_name' => 'alumnos',
+			       'relate_name' => 'cursos',
 			),
 		);
 	}
 	
 	function displaylinkedtitulo ($extra = null) {
-		return $this->titulo;
+		return '<a href="'.Gatuf_HTTP_URL_urlForView ('Registro_Views_Curso::verCurso', $this->id).'">'.$this->titulo.'</a>';
 	}
 	
 	function displaydescripcion ($extra = null) {
@@ -55,8 +55,6 @@ class Registro_Curso extends Gatuf_Model {
 	}
 	
 	function displayponente ($extra = null) {
-		$user = new Registro_User ($this->ponente);
-		
-		return (string) $user;
+		return (string) $this->get_ponente ();
 	}
 }
