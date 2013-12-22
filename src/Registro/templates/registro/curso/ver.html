@@ -5,6 +5,9 @@
 {else}
 	<p><a href="{url 'Registro_Views_Curso::matricular', $curso.id}">Matricularme en este curso</a></p>
 {/if}
+{if $user.administrator || ($user.staff && $user.id == $curso.ponente)}
+	<p><a href="{url 'Registro_Views_Curso::editar', $curso.id}">Actualizar curso</a></p>
+{/if}
 <h2>Ponente</h2>
 <p>{$curso.get_ponente}</p>
 <h2>Descripcion</h2>

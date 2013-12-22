@@ -11,11 +11,8 @@
 <form method="post" action=".">
 <table class="form">
 	<tr>
-		<th><strong>{$form.f.titulo.labelTag}:</strong></th>
-		<td>{if $form.f.titulo.errors}{$form.f.titulo.fieldErrors}{/if}
-		{$form.f.titulo|safe}<br />
-		<span class="helptext">{$form.f.titulo.help_text}</span>
-		</td>
+		<th><strong>Titulo:</strong></th>
+		<td>{$curso.titulo}</td>
 	</tr>
 	<tr>
 	{if $user.administrator}
@@ -26,14 +23,12 @@
 		</td>
 	{else}
 		<th><strong>Ponente:</strong></th>
-		<td>{$user}</td>
+		<td>{$curso.get_ponente}</td>
 	{/if}
 	</tr>
 	<tr>
-		<th><strong>{$form.f.cupo.labelTag}:</strong></th>
-		<td>{if $form.f.cupo.errors}{$form.f.cupo.fieldErrors}{/if}
-		{$form.f.cupo|safe}<br />
-		<span class="helptext">{$form.f.cupo.help_text}</span>
+		<th><strong>Cupo:</strong></th>
+		<td>{$curso.cupo}
 		</td>
 	</tr>
 	<tr>
@@ -52,7 +47,7 @@
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
-		<td><input type="submit" value="Crear curso"/> | <a href="{url 'Registro_Views_Curso::index'}">Cancelar</a>
+		<td><input type="submit" value="Actualizar curso"/> | <a href="{url 'Registro_Views_Curso::verCurso', $curso.id}">Cancelar</a>
 		</td>
 	</tr>
 </table>

@@ -58,6 +58,43 @@ class Registro_Views_Curso {
 		                                         $request);
 	}
 	
+	public $editar_precond = array ('Gatuf_Precondition::staffRequired');
+	public function editar ($request, $match) {
+		$curso = new Registro_Curso ();
+		
+		if ($curso->get ($match[1]) === false) {
+			return new Gatuf_HTTP_Error404();
+		}
+		
+		if (!$request->user->administrator) {
+			if ($request->user->id != $curso->ponente) {
+				$request->user->setMessage (3, 'No puedes modificar cursos que no son tuyos');
+				$url = Gatuf_HTTP_URL_urlForView ('Registro_Views_Curso::verCurso', $curso->id);
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		}
+		
+		$extra = array ('user' => $request->user, 'curso' => $curso);
+		if ($request->method == 'POST') {
+			$form = new Registro_Form_Curso_Editar ($request->POST, $extra);
+			
+			if ($form->isValid ()) {
+				$curso = $form->save ();
+				
+				$url = Gatuf_HTTP_URL_urlForView ('Registro_Views_Curso::verCurso', $curso->id);
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		} else {
+			$form = new Registro_Form_Curso_Editar (null, $extra);
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse('registro/curso/editar.html', 
+		                                         array('page_title' => 'Actualizar curso',
+		                                         'form' => $form,
+		                                         'curso' => $curso),
+		                                         $request);
+	}
+	
 	public function verCurso ($request, $match) {
 		$curso = new Registro_Curso ();
 		
