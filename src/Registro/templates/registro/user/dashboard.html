@@ -1,0 +1,40 @@
+{extends 'registro/base.html'}
+{block body}
+<table class="form" summary="">
+	<tr>
+		<th style="text-align: right">
+		<a href="http://gravatar.com/emails/" title="Cambie su imagen en gravatar.com"><img src="http://www.gravatar.com/avatar/{$user.email|md5}.jpg?s=60" alt=" " /></a>
+		</th>
+		<td>Yo</td>
+	</tr>
+	<tr>
+		<td>Nombre real:</td>
+		<td>{$user}</td>
+	</tr>
+	<tr>
+		<td>Nick:</td>
+		<td>{$user.login}</td>
+	</tr>
+	<tr>
+		<td>Escuela:</td>
+		<td>{$user.escuela}</td>
+	</tr>
+	<tr>
+		<td>Carrera:</td>
+		<td>{$user.get_carrera}</td>
+	</tr>
+</table>
+<h2>Cursos</h2>
+<p>Sólo se permite un máximo de 2 cursos por alumno.</p>
+<table>
+	<thead><tr><th>Curso</th><th></th></tr></thead>
+	<tbody>
+	{foreach $user.get_cursos_list as $curso}
+		<tr>
+			<td>{$curso.displaylinkedtitulo ()|safe}</td>
+			<td><a href="{url 'Registro_Views_Curso::desmatricular', $curso.id}">Desmatricular</a></td>
+		</tr>
+	{/foreach}
+	</tbody>
+</table>
+{/block}

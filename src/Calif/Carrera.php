@@ -64,4 +64,8 @@ class Calif_Carrera extends Gatuf_Model {
 		
 		return (int) $id;
 	}
+	
+	function __toString () {
+		return $this->descripcion;
+	}
 }

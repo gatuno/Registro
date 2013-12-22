@@ -134,7 +134,7 @@ class Registro_Views_Curso {
 		}
 		
 		if (count ($registrados) >= 2) {
-			$request->user->setMessage (2, 'El máximo permitido de cursos simultaneos es de 2. Elimina algun curso para matricularte a éste');
+			$request->user->setMessage (2, 'El máximo permitido de cursos simultaneos es de 2. Elimina algun curso para matricularte a este curso.');
 			return new Gatuf_HTTP_Response_Redirect ($url);
 		}
 		
@@ -170,7 +170,7 @@ class Registro_Views_Curso {
 		
 		if ($request->method == 'POST') {
 			$curso->delAssoc ($request->user);
-			$request->user->setMessage (1, 'Te has desmatriculado del curso"'.$curso->titulo.'"');
+			$request->user->setMessage (1, 'Te has desmatriculado del curso "'.$curso->titulo.'"');
 			
 			$url = Gatuf_HTTP_URL_urlForView ('Registro_Views_Curso::verCurso', $curso->id);
 			return new Gatuf_HTTP_Response_Redirect ($url);

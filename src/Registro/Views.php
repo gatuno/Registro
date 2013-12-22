@@ -215,4 +215,11 @@ class Registro_Views {
 		                                         'form' => $form),
 		                                         $request);
 	}
+	
+	public $dashboard_precond = array ('Gatuf_Precondition::loginRequired');
+	function dashboard ($request, $match) {
+		return Gatuf_Shortcuts_RenderToResponse ('registro/user/dashboard.html',
+		                                         array ('page_title' => 'Perfil público'),
+		                                         $request);
+	}
 }

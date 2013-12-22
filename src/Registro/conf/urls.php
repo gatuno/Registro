@@ -78,6 +78,13 @@ $ctl[] = array(
 );
 
 $ctl[] = array (
+	'regex' => '#^/dashboard/$#',
+	'base' => $base,
+	'model' => 'Registro_Views',
+	'method' => 'dashboard',
+);
+
+$ctl[] = array (
 	'regex' => '#^/cursos/$#',
 	'base' => $base,
 	'model' => 'Registro_Views_Curso',

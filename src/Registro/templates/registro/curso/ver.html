@@ -1,7 +1,7 @@
 {extends 'registro/base.html'}
 {block body}
 {if $matriculado}
-	<p>FIXME: Desmatricular</p>
+	<p><a href="{url 'Registro_Views_Curso::desmatricular', $curso.id}">Darme de baja de este curso</a></p>
 {else}
 	<p><a href="{url 'Registro_Views_Curso::matricular', $curso.id}">Matricularme en este curso</a></p>
 {/if}
