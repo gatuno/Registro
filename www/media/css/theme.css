@@ -81,3 +81,9 @@ td .icon {
 .body {
 	clear: both;
 }
+
+.helptext {
+  font-size: 80%;
+  color: #555753;
+}
+

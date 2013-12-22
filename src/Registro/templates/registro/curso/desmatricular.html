@@ -2,6 +2,6 @@
 {block body}
 <form method="POST" action=".">
 <h2>¿Estás seguro de que deseas desmatricularte del curso {$curso.titulo}?</h2>
-<p><input type="submit" value="Sí, darme de baja" /> | <a href=".">No FIXME</a>
+<p><input type="submit" value="Sí, darme de baja" /> | <a href="{url 'Registro_Views_Curso::verCurso', $curso.id}">Regresar al curso</a>
 </form>
 {/block}

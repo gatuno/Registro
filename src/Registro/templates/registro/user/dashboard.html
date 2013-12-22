@@ -26,6 +26,9 @@
 </table>
 <h2>Cursos</h2>
 <p>Sólo se permite un máximo de 2 cursos por alumno.</p>
+{if count ($user.get_cursos_list()) == 0}
+	<p>Actualmente no tienes cursos registrados.</p>
+{else}
 <table>
 	<thead><tr><th>Curso</th><th></th></tr></thead>
 	<tbody>
@@ -37,4 +40,5 @@
 	{/foreach}
 	</tbody>
 </table>
+{/if}
 {/block}
