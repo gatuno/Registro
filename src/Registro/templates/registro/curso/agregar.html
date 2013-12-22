@@ -1,0 +1,57 @@
+{extends "registro/base.html"}
+{block body}
+{if $form.errors}
+<div class="px-message-error">
+<p>El formulario contiene algunos errores</p>
+{if $form.get_top_errors}
+{$form.render_top_errors|unsafe}
+{/if}
+{if $form.f.key.errors}{$form.f.key.fieldErrors}{/if}
+</div>
+{/if}
+<form method="post" action=".">
+<table class="form">
+	<tr>
+		<th><strong>{$form.f.titulo.labelTag}:</strong></th>
+		<td>{if $form.f.titulo.errors}{$form.f.titulo.fieldErrors}{/if}
+		{$form.f.titulo|safe}<br />
+		<span class="helptext">{$form.f.titulo.help_text}</span>
+		</td>
+	</tr>
+	<tr>
+	{if $user.administrator}
+		<th><strong>{$form.f.ponente.labelTag}:</strong></th>
+		<td>{if $form.f.ponente.errors}{$form.f.ponente.fieldErrors}{/if}
+		{$form.f.ponente|safe}<br />
+		<span class="helptext">{$form.f.ponente.help_text}</span>
+		</td>
+	{else}
+		<th><strong>Ponente:</strong></th>
+		<td>{$user}</td>
+	{/if}
+	</tr>
+	<tr>
+		<th><strong>{$form.f.descripcion.labelTag}:</strong></th>
+		<td>{if $form.f.descripcion.errors}{$form.f.descripcion.fieldErrors}{/if}
+		{$form.f.descripcion|safe}<br />
+		<span class="helptext">{$form.f.descripcion.help_text}</span>
+		</td>
+	</tr>
+	<tr>
+		<th><strong>{$form.f.requisitos.labelTag}:</strong></th>
+		<td>{if $form.f.requisitos.errors}{$form.f.requisitos.fieldErrors}{/if}
+		{$form.f.requisitos|safe}<br />
+		<span class="helptext">{$form.f.requisitos.help_text}</span>
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><input type="submit" value="Crear curso"/> | <a href="{url 'Registro_Views::index'}">Cancelar</a>
+		</td>
+	</tr>
+</table>
+</form>
+{/block}
+{block extrahead}
+<script type="text/javascript" src="{media}/js/nicEdit.js"></script>
+{/block}

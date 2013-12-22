@@ -77,4 +77,11 @@ $ctl[] = array(
 	'method' => 'registerInputKey'
 );
 
+$ctl[] = array (
+	'regex' => '#^/curso/add/$#',
+	'base' => $base,
+	'model' => 'Registro_Views_Curso',
+	'method' => 'agregar'
+);
+
 return $ctl;
