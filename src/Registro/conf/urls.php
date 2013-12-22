@@ -98,4 +98,11 @@ $ctl[] = array (
 	'method' => 'verCurso'
 );
 
+$ctl[] = array (
+	'regex' => '#^/curso/(\d+)/matricular/$#',
+	'base' => $base,
+	'model' => 'Registro_Views_Curso',
+	'method' => 'matricular'
+);
+
 return $ctl;

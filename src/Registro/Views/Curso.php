@@ -44,7 +44,7 @@ class Registro_Views_Curso {
 			if ($form->isValid ()) {
 				$curso = $form->save ();
 				
-				$url = Gatuf_HTTP_URL_urlForView ('Registro_Views::index');
+				$url = Gatuf_HTTP_URL_urlForView ('Registro_Views_Curso::verCurso', $curso->id);
 				
 				return new Gatuf_HTTP_Response_Redirect ($url);
 			}
@@ -64,10 +64,53 @@ class Registro_Views_Curso {
 		if ($curso->get ($match[1]) === false) {
 			return new Gatuf_HTTP_Error404();
 		}
+		$registrados = $request->user->get_cursos_list ();
+		
+		$matriculado = false;
+		foreach ($registrados as $un_curso) {
+			if ($curso->id == $un_curso->id) $matriculado = true;
+		}
 		
 		return Gatuf_Shortcuts_RenderToResponse('registro/curso/ver.html', 
 		                                         array('page_title' => 'Curso: '.$curso->titulo,
-		                                         'curso' => $curso),
+		                                         'curso' => $curso,
+		                                         'matriculado' => $matriculado),
 		                                         $request);
+	}
+	
+	public $matricular_precond = array ('Gatuf_Precondition::loginRequired');
+	public function matricular ($request, $match) {
+		$curso = new Registro_Curso ();
+		
+		if ($curso->get ($match[1]) === false) {
+			return new Gatuf_HTTP_Error404();
+		}
+		$url = Gatuf_HTTP_URL_urlForView ('Registro_Views_Curso::verCurso', $curso->id);
+		
+		$registrados = $request->user->get_cursos_list ();
+		
+		foreach ($registrados as $registrado) {
+			if ($registrado->id == $curso->id) {
+				$request->user->setMessage (1, 'Ya estás registrado a este curso');
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		}
+		
+		if (count ($registrados) >= 2) {
+			$request->user->setMessage (2, 'El máximo permitido de cursos simultaneos es de 2. Elimina algun curso para matricularte a éste');
+			return new Gatuf_HTTP_Response_Redirect ($url);
+		}
+		
+		$matriculados = $curso->get_alumnos_list ();
+		
+		if (count ($matriculados) >= $curso->cupo) {
+			$request->user->setMessage (2, 'Lo sentimos, este curso está lleno.');
+			return new Gatuf_HTTP_Response_Redirect ($url);
+		}
+		
+		$curso->setAssoc ($request->user);
+		
+		$request->user->setMessage (1, 'Bienvenido al curso "'.$curso->titulo.'"');
+		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
 }
