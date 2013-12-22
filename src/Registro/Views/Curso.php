@@ -150,4 +150,35 @@ class Registro_Views_Curso {
 		$request->user->setMessage (1, 'Bienvenido al curso "'.$curso->titulo.'"');
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
+	
+	public function desmatricular ($request, $match) {
+		$curso = new Registro_Curso ();
+		
+		if ($curso->get ($match[1]) === false) {
+			return new Gatuf_HTTP_Error404();
+		}
+		
+		$registrados = $request->user->get_cursos_list ();
+		$dentro = false;
+		foreach ($registrados as $registrado) {
+			if ($registrado->id == $curso->id) $dentro = true;
+		}
+		
+		if (!$dentro) {
+			$request->user->setMessage (3, 'No te encuentras matriculado a este curso');
+		}
+		
+		if ($request->method == 'POST') {
+			$curso->delAssoc ($request->user);
+			$request->user->setMessage (1, 'Te has desmatriculado del curso"'.$curso->titulo.'"');
+			
+			$url = Gatuf_HTTP_URL_urlForView ('Registro_Views_Curso::verCurso', $curso->id);
+			return new Gatuf_HTTP_Response_Redirect ($url);
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse('registro/curso/desmatricular.html', 
+		                                         array('page_title' => 'Desmatricular del curso',
+		                                         'curso' => $curso),
+		                                         $request);
+	}
 }

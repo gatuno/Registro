@@ -99,6 +99,13 @@ $ctl[] = array (
 );
 
 $ctl[] = array (
+	'regex' => '#^/curso/(\d+)/update/$#',
+	'base' => $base,
+	'model' => 'Registro_Views_Curso',
+	'method' => 'editar'
+);
+
+$ctl[] = array (
 	'regex' => '#^/curso/(\d+)/matricular/$#',
 	'base' => $base,
 	'model' => 'Registro_Views_Curso',
@@ -106,10 +113,10 @@ $ctl[] = array (
 );
 
 $ctl[] = array (
-	'regex' => '#^/curso/(\d+)/update/$#',
+	'regex' => '#^/curso/(\d+)/desmatricular/$#',
 	'base' => $base,
 	'model' => 'Registro_Views_Curso',
-	'method' => 'editar'
+	'method' => 'desmatricular'
 );
 
 return $ctl;
