@@ -52,6 +52,15 @@ class Registro_Form_Curso_Agregar extends Gatuf_Form {
 					),
 			));
 		}
+		
+		$this->fields['cupo'] = new Gatuf_Form_Field_Integer (
+			array (
+				'required' => true,
+				'label' => 'Cupo',
+				'help_text' => 'La capacidad máxima del curso',
+				'min' => 1,
+				'max' => 30,
+		));
 	}
 	
 	public function save ($commit = true) {

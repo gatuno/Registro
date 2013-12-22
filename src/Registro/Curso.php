@@ -43,6 +43,12 @@ class Registro_Curso extends Gatuf_Model {
 			       'model' => 'Registro_User',
 			       'relate_name' => 'cursos',
 			),
+			'cupo' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Integer',
+			       'blank' => false,
+			       'default' => 0,
+			),
 		);
 	}
 	

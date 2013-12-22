@@ -6,7 +6,6 @@
 {if $form.get_top_errors}
 {$form.render_top_errors|unsafe}
 {/if}
-{if $form.f.key.errors}{$form.f.key.fieldErrors}{/if}
 </div>
 {/if}
 <form method="post" action=".">
@@ -29,6 +28,13 @@
 		<th><strong>Ponente:</strong></th>
 		<td>{$user}</td>
 	{/if}
+	</tr>
+	<tr>
+		<th><strong>{$form.f.cupo.labelTag}:</strong></th>
+		<td>{if $form.f.cupo.errors}{$form.f.cupo.fieldErrors}{/if}
+		{$form.f.cupo|safe}<br />
+		<span class="helptext">{$form.f.cupo.help_text}</span>
+		</td>
 	</tr>
 	<tr>
 		<th><strong>{$form.f.descripcion.labelTag}:</strong></th>
