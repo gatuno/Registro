@@ -45,4 +45,18 @@ class Registro_Curso extends Gatuf_Model {
 			),
 		);
 	}
+	
+	function displaylinkedtitulo ($extra = null) {
+		return $this->titulo;
+	}
+	
+	function displaydescripcion ($extra = null) {
+		return strip_tags ($this->descripcion);
+	}
+	
+	function displayponente ($extra = null) {
+		$user = new Registro_User ($this->ponente);
+		
+		return (string) $user;
+	}
 }

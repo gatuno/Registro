@@ -1,0 +1,7 @@
+{extends 'registro/base.html'}
+{block body}
+{if $user.staff || $user.administrator}
+<p><a href="{url 'Registro_Views_Curso::agregar'}"><img class="icon" src="{media '/img/list-add.png'}" alt="Nuevo curso" />Nuevo curso</a></p>
+{/if}
+{$paginador.render}
+{/block}

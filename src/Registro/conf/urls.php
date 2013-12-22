@@ -78,6 +78,13 @@ $ctl[] = array(
 );
 
 $ctl[] = array (
+	'regex' => '#^/cursos/$#',
+	'base' => $base,
+	'model' => 'Registro_Views_Curso',
+	'method' => 'index'
+);
+
+$ctl[] = array (
 	'regex' => '#^/curso/add/$#',
 	'base' => $base,
 	'model' => 'Registro_Views_Curso',
