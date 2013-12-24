@@ -222,4 +222,27 @@ class Registro_Views {
 		                                         array ('page_title' => 'Perfil público'),
 		                                         $request);
 	}
+	
+	public $siteAdmin_precond = array ('Gatuf_Precondition::adminRequired');
+	function siteAdmin ($request, $match) {
+		if ($request->method == 'POST') {
+			$form = new Registro_Form_SiteAdmin ($request->POST);
+			
+			if ($form->isValid ()) {
+				$form->save ();
+				
+				$request->user->setMessage (1, 'Preferencias del sitio guardadas');
+				
+				$url = Gatuf_HTTP_URL_urlForView ('Registro_Views::index');
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		} else {
+			$form = new Registro_Form_SiteAdmin (null);
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse ('registro/site-admin.html',
+		                                         array ('page_title' => 'Administración del sitio',
+		                                         'form' => $form),
+		                                         $request);
+	}
 }

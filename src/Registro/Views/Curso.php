@@ -133,6 +133,15 @@ class Registro_Views_Curso {
 			}
 		}
 		
+		$gconf = new Gatuf_GSetting ();
+		$gconf->setApp ('Registro');
+		
+		if ($gconf->getVal ('matriculaciones_activas', 'F') == 'F') {
+			/* Las matriculaciones no están activas */
+			$request->user->setMessage (3, 'El periodo de matriculaciones a los cursos está cerrado');
+			return new Gatuf_HTTP_Response_Redirect ($url);
+		}
+		
 		if (count ($registrados) >= 2) {
 			$request->user->setMessage (2, 'El máximo permitido de cursos simultaneos es de 2. Elimina algun curso para matricularte a este curso.');
 			return new Gatuf_HTTP_Response_Redirect ($url);
@@ -172,6 +181,13 @@ class Registro_Views_Curso {
 			$curso->delAssoc ($request->user);
 			$request->user->setMessage (1, 'Te has desmatriculado del curso "'.$curso->titulo.'"');
 			
+			$gconf = new Gatuf_GSetting ();
+			$gconf->setApp ('Registro');
+		
+			if ($gconf->getVal ('matriculaciones_activas', 'F') == 'F') {
+				/* Las matriculaciones no están activas */
+				$request->user->setMessage (2, 'El periodo de matriculaciones a los cursos está cerrado. No podrás volver entrar a este curso.');
+			}
 			$url = Gatuf_HTTP_URL_urlForView ('Registro_Views_Curso::verCurso', $curso->id);
 			return new Gatuf_HTTP_Response_Redirect ($url);
 		}

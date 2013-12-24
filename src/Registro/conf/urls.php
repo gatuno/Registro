@@ -85,6 +85,13 @@ $ctl[] = array (
 );
 
 $ctl[] = array (
+	'regex' => '#^/admin/$#',
+	'base' => $base,
+	'model' => 'Registro_Views',
+	'method' => 'siteAdmin',
+);
+
+$ctl[] = array (
 	'regex' => '#^/cursos/$#',
 	'base' => $base,
 	'model' => 'Registro_Views_Curso',
