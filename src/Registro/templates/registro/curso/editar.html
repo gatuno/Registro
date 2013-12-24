@@ -27,6 +27,13 @@
 	{/if}
 	</tr>
 	<tr>
+		<th><strong>{$form.f.contacto.labelTag}:</strong></th>
+		<td>{if $form.f.contacto.errors}{$form.f.contacto.fieldErrors}{/if}
+		{$form.f.contacto|safe}<br />
+		<span class="helptext">{$form.f.contacto.help_text}</span>
+		</td>
+	</tr>
+	<tr>
 		<th><strong>Cupo:</strong></th>
 		<td>{$curso.cupo}
 		</td>
@@ -43,6 +50,20 @@
 		<td>{if $form.f.requisitos.errors}{$form.f.requisitos.fieldErrors}{/if}
 		{$form.f.requisitos|safe}<br />
 		<span class="helptext">{$form.f.requisitos.help_text}</span>
+		</td>
+	</tr>
+	<tr>
+		<th><strong>{$form.f.conocimiento.labelTag}:</strong></th>
+		<td>{if $form.f.conocimiento.errors}{$form.f.conocimiento.fieldErrors}{/if}
+		{$form.f.conocimiento|safe}<br />
+		<span class="helptext">{$form.f.conocimiento.help_text}</span>
+		</td>
+	</tr>
+	<tr>
+		<th><strong>{$form.f.horario.labelTag}:</strong></th>
+		<td>{if $form.f.horario.errors}{$form.f.horario.fieldErrors}{/if}
+		{$form.f.horario|safe}<br />
+		<span class="helptext">{$form.f.horario.help_text}</span>
 		</td>
 	</tr>
 	<tr>

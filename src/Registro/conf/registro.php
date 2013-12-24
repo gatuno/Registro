@@ -13,6 +13,8 @@ $cfg['admins'] = array(
 #	$ dd if=/dev/urandom bs=1 count=64 2>/dev/null | base64 -w 0
 $cfg['secret_key'] = 'qYM6qm5X40xgCsHUgeAqFE48/xvC++OyVH+pYVgF4COBkZ6l6iWOz0Wu7kB';
 
+$cfg['mailhide_pubkey'] = '';
+$cfg['mailhide_privkey'] = '';
 # ---------------------------------------------------------------------------- #
 #                                   Rutas                                      #
 # ---------------------------------------------------------------------------- #

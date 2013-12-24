@@ -9,9 +9,13 @@
 	<p><a href="{url 'Registro_Views_Curso::editar', $curso.id}">Actualizar curso</a></p>
 {/if}
 <h2>Ponente</h2>
-<p>{$curso.get_ponente}</p>
+<p>{$curso.get_ponente}. <strong>Correo de contacto</strong>: {mailhide $curso.contacto}</p>
+<h2>Horarios</h2>
+<p>{$curso.horario|safe}</p>
 <h2>Descripcion</h2>
 <p>{$curso.descripcion|safe}</p>
 <h2>Requisitos</h2>
 <p>{$curso.requisitos|safe}</p>
+<h2>Conocimientos previos</h2>
+<p>{$curso.conocimiento|safe}</p>
 {/block}

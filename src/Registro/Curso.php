@@ -31,11 +31,26 @@ class Registro_Curso extends Gatuf_Model {
 			       'type' => 'Gatuf_DB_Field_Text',
 			       'blank' => false,
 			),
+			'conocimiento' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Text',
+			       'blank' => false,
+			),
+			'horario' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Text',
+			       'blank' => false,
+			),
 			'ponente' =>
 			array (
 			       'type' => 'Gatuf_DB_Field_Foreignkey',
 			       'model' => 'Registro_User',
 			       'relate_name' => 'ponente',
+			),
+			'contacto' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Email',
+			       'blank' => false,
 			),
 			'alumnos' =>
 			array (

@@ -34,6 +34,22 @@ class Registro_Form_Curso_Agregar extends Gatuf_Form {
 				'widget' => 'Gatuf_Form_Widget_HtmlareaInput',
 		));
 		
+		$this->fields['conocimiento'] = new Gatuf_Form_Field_Varchar (
+			array (
+				'required' => true,
+				'label' => 'Conocimiento previos',
+				'help_text' => 'Lista de conocimientos previos deseables en el curso',
+				'widget' => 'Gatuf_Form_Widget_HtmlareaInput',
+		));
+		
+		$this->fields['horario'] = new Gatuf_Form_Field_Varchar (
+			array (
+				'required' => true,
+				'label' => 'Horario',
+				'help_text' => 'Muy importante especificar el horario. En caso de no contar con un aula, escribir aula pendiente.',
+				'widget' => 'Gatuf_Form_Widget_HtmlareaInput',
+		));
+		
 		if ($this->user->administrator) {
 			$choices = array ();
 			
@@ -53,11 +69,19 @@ class Registro_Form_Curso_Agregar extends Gatuf_Form {
 			));
 		}
 		
+		$this->fields['contacto'] = new Gatuf_Form_Field_Email (
+			array (
+				'required' => true,
+				'label' => 'Correo de contacto',
+				'help_text' => 'Este correo estará disponible publicamente',
+		));
+		
 		$this->fields['cupo'] = new Gatuf_Form_Field_Integer (
 			array (
 				'required' => true,
 				'label' => 'Cupo',
-				'help_text' => 'La capacidad máxima del curso',
+				'initial' => 24,
+				'help_text' => 'La capacidad máxima del curso. Mínimo 1, máximo 30',
 				'min' => 1,
 				'max' => 30,
 		));

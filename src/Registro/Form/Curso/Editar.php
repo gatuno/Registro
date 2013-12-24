@@ -26,6 +26,24 @@ class Registro_Form_Curso_Editar extends Gatuf_Form {
 				'widget' => 'Gatuf_Form_Widget_HtmlareaInput',
 		));
 		
+		$this->fields['conocimiento'] = new Gatuf_Form_Field_Varchar (
+			array (
+				'required' => true,
+				'label' => 'Conocimiento previos',
+				'initial' => $this->curso->conocimiento,
+				'help_text' => 'Lista de conocimientos previos deseables en el curso',
+				'widget' => 'Gatuf_Form_Widget_HtmlareaInput',
+		));
+		
+		$this->fields['horario'] = new Gatuf_Form_Field_Varchar (
+			array (
+				'required' => true,
+				'label' => 'Horario',
+				'initial' => $this->curso->horario,
+				'help_text' => 'Muy importante especificar el horario. En caso de no contar con un aula, escribir aula pendiente.',
+				'widget' => 'Gatuf_Form_Widget_HtmlareaInput',
+		));
+		
 		if ($this->user->administrator) {
 			$choices = array ();
 			
@@ -45,6 +63,14 @@ class Registro_Form_Curso_Editar extends Gatuf_Form {
 					),
 			));
 		}
+		
+		$this->fields['contacto'] = new Gatuf_Form_Field_Email (
+			array (
+				'required' => true,
+				'initial' => $this->curso->contacto,
+				'label' => 'Correo de contacto',
+				'help_text' => 'Este correo estará disponible publicamente',
+		));
 	}
 	
 	public function save ($commit = true) {
