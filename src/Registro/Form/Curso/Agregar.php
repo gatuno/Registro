@@ -87,6 +87,62 @@ class Registro_Form_Curso_Agregar extends Gatuf_Form {
 		));
 	}
 	
+	function clean_descripcion () {
+		$data = $this->cleaned_data['descripcion'];
+		
+		if (substr ($data, -4) == '<br>') {
+			$data = substr ($data, 0, -4);
+		}
+		
+		if ($data === '') {
+			throw new Gatuf_Form_Invalid ('Este campo es obligatorio');
+		}
+		
+		return $data;
+	}
+	
+	function clean_requisitos () {
+		$data = $this->cleaned_data['requisitos'];
+		
+		if (substr ($data, -4) == '<br>') {
+			$data = substr ($data, 0, -4);
+		}
+		
+		if ($data === '') {
+			throw new Gatuf_Form_Invalid ('Este campo es obligatorio');
+		}
+		
+		return $data;
+	}
+	
+	function clean_conocimiento () {
+		$data = $this->cleaned_data['conocimiento'];
+		
+		if (substr ($data, -4) == '<br>') {
+			$data = substr ($data, 0, -4);
+		}
+		
+		if ($data === '') {
+			throw new Gatuf_Form_Invalid ('Este campo es obligatorio');
+		}
+		
+		return $data;
+	}
+	
+	function clean_horario () {
+		$data = $this->cleaned_data['horario'];
+		
+		if (substr ($data, -4) == '<br>') {
+			$data = substr ($data, 0, -4);
+		}
+		
+		if ($data === '') {
+			throw new Gatuf_Form_Invalid ('Este campo es obligatorio');
+		}
+		
+		return $data;
+	}
+	
 	public function save ($commit = true) {
 		if (!$this->isValid()) {
 			throw new Exception('Cannot save the model from an invalid form.');
