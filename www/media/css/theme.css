@@ -35,47 +35,86 @@ td .icon {
 	clear: both;
 }
 
-.advertencia
-{
+.advertencia {
 	border:2px solid #f69724;
 	background:url('../img/warning.png') no-repeat 10px 10px;
 }
 
-.error
-{
+.error {
 	border:2px solid #d93b30;
 	background:url('../img/error.png') no-repeat 10px 10px;
 }
 
-.pregunta
-{
+.pregunta {
 	border:2px solid #395e90;
 	background:url('../img/question.png') no-repeat 10px 10px;
 }
 
-.info
-{
+.info {
 	border:2px solid #dce5f6;
 	background:url('../img/info.png') no-repeat 10px 10px;
 }
 
-.advertencia p, .error p, .pregunta p, .info p
-{
+.advertencia p, .error p, .pregunta p, .info p {
 	margin-top:0;
 }
 
-.menu {
+.topmenu {
+	left: 0;
+	top: 0;
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
+	padding-right: 15px;
+	background: #D5EAFF none repeat scroll 0 0
+}
+
+.nav ul {
+	margin: 0;
+	padding: 3px;
 	list-style-type: none;
-	display: inline;
-	float:left;
+	list-style-image: none;
+	list-style-position: outside;
+	float: left;
 }
 
-.menu li {
-	display: inline;
+.nav li:hover ul {
+	display: block;
+	padding: 2px;
+	width: 180px;
+	z-index: 2;
 }
 
-.userinfo {
-	float: right;
+.nav ul li {
+	position: relative;
+}
+
+.nav a {
+	display: block;
+	padding: 5px;
+}
+
+.nav li ul {
+	display: none;
+	padding: 2px;
+	position: absolute;
+	width: 300px;
+}
+
+.nav li ul li {
+	margin-left: -4px;
+}
+
+.titulo {
+	clear: both;
+	padding-bottom: 10px;
+	padding-top: 50px;
+	width: 100%;
+	min-width: 760px;
+}
+
+.titulo h1 {
+	margin: 0px;
 }
 
 .body {
@@ -87,3 +126,15 @@ td .icon {
   color: #555753;
 }
 
+a:link, a:visited {
+	color: #0000EE;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #7400EE;
+}
+
+a.px-mailhide {
+	text-decoration: underline;
+}

@@ -8,18 +8,27 @@
 	<title>Cursos de Invierno - {$page_title}</title>
 </head>
 <body>
-	<ul class="menu">
-		<li><a href="{url 'Registro_Views::index'}">Inicio</a></li>
-		<li><a href="{url 'Registro_Views_Curso::index'}">Cursos</a></li>
-	</ul>
-	<!-- Esta es la información del usuario -->
-	<div class="userinfo">{if !$user.isAnonymous()}
-			<p><img src="http://www.gravatar.com/avatar/{$user.email|md5}.jpg?s=30" alt=" " /> <a href="{url 'Registro_Views::dashboard'}"><strong>{$user}</strong></a> <a href="{url 'Registro_Views::logout'}"><img class="icon" src="{media '/img/application-exit.png'}" alt="Salir" />Salir</a></p>{else}
-			<p><a href="{url 'Registro_Views::register'}">Registrarse</a> <a href="{url 'Registro_Views::login'}">Iniciar sesión</a></p>{/if}
-	</div>{if $user and $user.id}
+	<div class="topmenu">
+	<table cellspacing="0px" cellpadding="0px" style="width: 100%"><tbody><tr>
+		<td>
+			<div class="nav">
+				<ul><li><a href="{url 'Registro_Views::index'}">Inicio</a></li></ul>
+				<ul><li><a href="{url 'Registro_Views_Curso::index'}">Cursos</a></li></ul>
+			</div>
+		</td>
+		<td style="text-align: right;"><!-- Esta es la información del usuario -->
+			<div class="userinfo" style="float: right; padding-top: 8px; margin-right: 8px; margin-left: 8px; padding-bottom: 8px;">
+				{if !$user.isAnonymous()}<img src="http://www.gravatar.com/avatar/{$user.email|md5}.jpg?s=30" alt=" " /> <a href="{url 'Registro_Views::dashboard'}"><strong>{$user}</strong></a> <a href="{url 'Registro_Views::logout'}"><img class="icon" src="{media '/img/application-exit.png'}" alt="Salir" />Salir</a>
+				{else}<a href="{url 'Registro_Views::register'}">Registrarse</a> <a href="{url 'Registro_Views::login'}">Iniciar sesión</a>
+				{/if}
+			</div>
+		</td>
+	</tr></tbody></table>
+	</div>
+	<div class="titulo"><h1>{$page_title}</h1></div>
+	{if $user and $user.id}
 	{getmsgs $user}{/if}
 	<div class="body">
-	<h1>{$page_title}</h1>
 	{block body}{/block}
 	</div>
 {block javascript}{/block}
