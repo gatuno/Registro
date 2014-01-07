@@ -7,6 +7,7 @@
 {/if}
 {if $user.administrator || ($user.staff && $user.id == $curso.ponente)}
 	<p><a href="{url 'Registro_Views_Curso::editar', $curso.id}">Actualizar curso</a></p>
+	<p><a href="{url 'Registro_Views_Curso::verLista', $curso.id}">Ver listas</a></p>
 {/if}
 <h2>Ponente</h2>
 <p>{$curso.get_ponente}. <strong>Correo de contacto</strong>: {mailhide $curso.contacto}</p>

@@ -197,4 +197,72 @@ class Registro_Views_Curso {
 		                                         'curso' => $curso),
 		                                         $request);
 	}
+	
+	public $verLista_precond = array ('Gatuf_Precondition::staffRequired');
+	public function verLista ($request, $match) {
+		$curso = new Registro_Curso ();
+		
+		if ($curso->get ($match[1]) === false) {
+			return new Gatuf_HTTP_Error404();
+		}
+		
+		if (!$request->user->administrator) {
+			if ($request->user->id != $curso->ponente) {
+				$request->user->setMessage (3, 'No puedes visualizar listas de cursos que no son tuyos');
+				$url = Gatuf_HTTP_URL_urlForView ('Registro_Views_Curso::verCurso', $curso->id);
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		}
+		$alumnos = $curso->get_alumnos_list (array ('order' => 'last_name ASC, first_name ASC'));
+		
+		return Gatuf_Shortcuts_RenderToResponse('registro/curso/lista.html', 
+		                                         array('page_title' => 'Lista de alumnos',
+		                                         'curso' => $curso,
+		                                         'alumnos' => $alumnos),
+		                                         $request);
+	}
+	
+	public $descargarListaODS_precond = array ('Gatuf_Precondition::staffRequired');
+	public function descargarListaODS ($request, $match) {
+		$curso = new Registro_Curso ();
+		
+		if ($curso->get ($match[1]) === false) {
+			return new Gatuf_HTTP_Error404();
+		}
+		
+		if (!$request->user->administrator) {
+			if ($request->user->id != $curso->ponente) {
+				$request->user->setMessage (3, 'No puedes visualizar listas de cursos que no son tuyos');
+				$url = Gatuf_HTTP_URL_urlForView ('Registro_Views_Curso::verCurso', $curso->id);
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		}
+		$alumnos = $curso->get_alumnos_list (array ('order' => 'last_name ASC, first_name ASC'));
+		
+		$libro_ods = new Gatuf_ODS ();
+		
+		$libro_ods->addNewSheet ('Principal');
+		$libro_ods->addStringCell ('Principal', 1, 1, 'Nick');
+		$libro_ods->addStringCell ('Principal', 1, 2, 'Apellido');
+		$libro_ods->addStringCell ('Principal', 1, 3, 'Nombre');
+		$libro_ods->addStringCell ('Principal', 1, 4, 'Correo');
+		$libro_ods->addStringCell ('Principal', 1, 5, 'Escuela');
+		$libro_ods->addStringCell ('Principal', 1, 6, 'Carrera');
+		
+		$g = 2;
+		foreach ($alumnos as $alumno) {
+			$libro_ods->addStringCell ('Principal', $g, 1, $alumno->login);
+			$libro_ods->addStringCell ('Principal', $g, 2, $alumno->last_name);
+			$libro_ods->addStringCell ('Principal', $g, 3, $alumno->first_name);
+			$libro_ods->addStringCell ('Principal', $g, 4, $alumno->email);
+			$libro_ods->addStringCell ('Principal', $g, 5, $alumno->escuela);
+			$libro_ods->addStringCell ('Principal', $g, 6, (string) $alumno->get_carrera ());
+			
+			$g++;
+		}
+		
+		$libro_ods->construir_paquete ();
+		
+		return new Gatuf_HTTP_Response_File ($libro_ods->nombre, 'Lista_curso_'.$curso->id.'.ods', 'application/vnd.oasis.opendocument.spreadsheet', true);
+	}
 }

@@ -1,0 +1,19 @@
+{extends 'registro/base.html'}
+{block body}
+<p>Lista para el curso <a href="{url 'Registro_Views_Curso::verCurso', $curso.id}">{$curso.titulo}</a></p>
+<p>Descargar lista como <a href="{url 'Registro_Views_Curso::descargarListaODS', $curso.id}">ODS</a></p>
+<table border="1">
+	<thead><tr><th>No.</th><th>Nick</th><th>Nombre</th><th>Correo</th><th>Escuela</th><th>Carrera</th></tr></thead>
+	<tbody>
+		{assign $n = 1}
+		{foreach $alumnos as $alumno}
+		<tr>
+			<td>{$n++}</td>
+			<td>{$alumno.login}</td><td>{$alumno.last_name} {$alumno.first_name}</td>
+			<td>{$alumno.email}</td><td>{$alumno.escuela}</td>
+			<td>{$alumno.get_carrera}</td>
+		</tr>
+		{/foreach}
+	</tbody>
+</table>
+{/block}

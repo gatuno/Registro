@@ -133,4 +133,18 @@ $ctl[] = array (
 	'method' => 'desmatricular'
 );
 
+$ctl[] = array (
+	'regex' => '#^/curso/(\d+)/lista/$#',
+	'base' => $base,
+	'model' => 'Registro_Views_Curso',
+	'method' => 'verLista'
+);
+
+$ctl[] = array (
+	'regex' => '#^/curso/(\d+)/lista/ODS/$#',
+	'base' => $base,
+	'model' => 'Registro_Views_Curso',
+	'method' => 'descargarListaODS'
+);
+
 return $ctl;
