@@ -109,7 +109,7 @@ class Registro_Views_Curso {
 		}
 		
 		return Gatuf_Shortcuts_RenderToResponse('registro/curso/ver.html', 
-		                                         array('page_title' => 'Curso: '.$curso->titulo,
+		                                         array('page_title' => $curso->titulo,
 		                                         'curso' => $curso,
 		                                         'matriculado' => $matriculado),
 		                                         $request);

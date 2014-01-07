@@ -26,8 +26,8 @@ td .icon {
 	margin: 0;
 }
 
-.advertencia, .error, .info, .pregunta
-{
+/* Para los mensajes de error */
+.advertencia, .error, .info, .pregunta {
 	padding-left:52px;
 	padding-top:16px;
 	min-height:52px;

@@ -72,7 +72,12 @@ class Registro_Curso extends Gatuf_Model {
 	}
 	
 	function displaydescripcion ($extra = null) {
-		return strip_tags ($this->descripcion);
+		$text = strip_tags ($this->descripcion);
+		
+		if (strlen ($text) > 200) {
+			return substr ($text, 0, 200).'... '.'<a href="'.Gatuf_HTTP_URL_urlForView ('Registro_Views_Curso::verCurso', $this->id).'">Ver más'.'</a>';
+		}
+		return $text;
 	}
 	
 	function displayponente ($extra = null) {

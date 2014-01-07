@@ -55,7 +55,7 @@ class Registro_Form_RegisterConfirmation extends Gatuf_Form {
 		$this->fields['last_name'] = new Gatuf_Form_Field_Varchar(
 			array(
 				'required' => true,
-				'label' => 'Apellido',
+				'label' => 'Apellidos',
 				'initial' => '',
 				'widget_attrs' => array(
 					'maxlength' => 50,
