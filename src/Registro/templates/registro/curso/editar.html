@@ -21,6 +21,20 @@
 		{$form.f.ponente|safe}<br />
 		<span class="helptext">{$form.f.ponente.help_text}</span>
 		</td>
+	</tr>
+	<tr>
+		<th><strong>{$form.f.requiere_ife.labelTag}:</strong></th>
+		<td>{if $form.f.requiere_ife.errors}{$form.f.requiere_ife.fieldErrors}{/if}
+		{$form.f.requiere_ife|safe}<br />
+		<span class="helptext">{$form.f.requiere_ife.help_text}</span>
+		</td>
+	</tr>
+	<tr>
+		<th><strong>{$form.f.requiere_curp.labelTag}:</strong></th>
+		<td>{if $form.f.requiere_curp.errors}{$form.f.requiere_curp.fieldErrors}{/if}
+		{$form.f.requiere_curp|safe}<br />
+		<span class="helptext">{$form.f.requiere_curp.help_text}</span>
+		</td>
 	{else}
 		<th><strong>Ponente:</strong></th>
 		<td>{$curso.get_ponente}</td>

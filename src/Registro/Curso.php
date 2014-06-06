@@ -64,6 +64,18 @@ class Registro_Curso extends Gatuf_Model {
 			       'blank' => false,
 			       'default' => 0,
 			),
+			'requiere_ife' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Boolean',
+			       'blank' => false,
+			       'default' => false,
+			),
+			'requiere_curp' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Boolean',
+			       'blank' => false,
+			       'default' => false,
+			),
 		);
 	}
 	

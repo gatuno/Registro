@@ -62,6 +62,24 @@ class Registro_Form_Curso_Editar extends Gatuf_Form {
 						'choices' => $choices,
 					),
 			));
+			
+			$this->fields['requiere_ife'] = new Gatuf_Form_Field_Boolean (
+				array (
+					'required' => true,
+					'initial' => $this->curso->requiere_ife,
+					'label' => 'Requiere IFE',
+					'help_text' => 'Si este curso requiere que el alumno tenga su IFE subida antes de matricularse',
+					'widget' => 'Gatuf_Form_Widget_CheckboxInput',
+			));
+			
+			$this->fields['requiere_curp'] = new Gatuf_Form_Field_Boolean (
+				array (
+					'required' => true,
+					'initial' => $this->curso->requiere_curp,
+					'label' => 'Requiere Curp',
+					'help_text' => 'Si este curso requiere que el alumno tenga su Curp subida antes de matricularse',
+					'widget' => 'Gatuf_Form_Widget_CheckboxInput',
+			));
 		}
 		
 		$this->fields['contacto'] = new Gatuf_Form_Field_Email (

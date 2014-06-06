@@ -67,6 +67,24 @@ class Registro_Form_Curso_Agregar extends Gatuf_Form {
 						'choices' => $choices,
 					),
 			));
+			
+			$this->fields['requiere_ife'] = new Gatuf_Form_Field_Boolean (
+				array (
+					'required' => true,
+					'initial' => false,
+					'label' => 'Requiere IFE',
+					'help_text' => 'Si este curso requiere que el alumno tenga su IFE subida antes de matricularse',
+					'widget' => 'Gatuf_Form_Widget_CheckboxInput',
+			));
+			
+			$this->fields['requiere_curp'] = new Gatuf_Form_Field_Boolean (
+				array (
+					'required' => true,
+					'initial' => false,
+					'label' => 'Requiere Curp',
+					'help_text' => 'Si este curso requiere que el alumno tenga su Curp subida antes de matricularse',
+					'widget' => 'Gatuf_Form_Widget_CheckboxInput',
+			));
 		}
 		
 		$this->fields['contacto'] = new Gatuf_Form_Field_Email (
@@ -83,7 +101,7 @@ class Registro_Form_Curso_Agregar extends Gatuf_Form {
 				'initial' => 24,
 				'help_text' => 'La capacidad máxima del curso. Mínimo 1, máximo 30',
 				'min' => 1,
-				'max' => 30,
+				'max' => 60,
 		));
 	}
 	
