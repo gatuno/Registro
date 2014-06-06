@@ -27,6 +27,15 @@ class Registro_User extends Gatuf_User {
 			'default' => ''
 		);
 		
+		$this->_a['cols']['curp'] = array (
+			'type' => 'Gatuf_DB_Field_File',
+			'blank' => false,
+		);
+		
+		$this->_a['cols']['ife'] = array (
+			'type' => 'Gatuf_DB_Field_File',
+			'blank' => false,
+		);
 		/* Poner demás cosas */
 	}
 }

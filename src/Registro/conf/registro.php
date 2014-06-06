@@ -53,6 +53,7 @@ $cfg['registro_base'] = '/registro';
 $cfg['url_base'] = 'http://alanturing.cucei.udg.mx';
 $cfg['url_media'] = 'http://alanturing.cucei.udg.mx/registro/media';
 
+$cfg['user_data_upload'] = '/home/www/sistemas/registro/user_data_upload';
 
 $cfg['registro_views'] = dirname(__FILE__).'/urls.php';
 

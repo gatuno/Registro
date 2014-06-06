@@ -23,6 +23,18 @@
 		<td>Carrera:</td>
 		<td>{$user.get_carrera}</td>
 	</tr>
+	{if $user.curp}
+	<tr>
+		<td>Curp subida:</td>
+		<td>Sí</td>
+	</tr>
+	{/if}
+	{if $user.ife}
+	<tr>
+		<td>IFE subida:</td>
+		<td>Sí</td>
+	</tr>
+	{/if}
 </table>
 <h2>Cursos</h2>
 <p>Sólo se permite un máximo de 2 cursos por alumno.</p>

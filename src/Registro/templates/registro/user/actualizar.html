@@ -1,0 +1,30 @@
+{extends "registro/base.html"}
+{block body}
+{if $form.errors}
+<div class="px-message-error">
+<p>El formulario contiene algunos errores:</p>{if $form.get_top_errors}{$form.render_top_errors|unsafe}{/if}
+</div>
+{/if}
+<form method="post" enctype="multipart/form-data" action=".">
+<table class="form">
+	<tr>
+		<th><strong>Usuario:</strong></th>
+		<td>{$user.login}</td>
+	</tr>
+	<tr>
+		<th><strong>Nombre:</strong></th>
+		<td>{$user.first_name}</td>
+	</tr>
+	<tr>
+		<th><strong>Apellido:</strong></th>
+		<td>{$user.last_name}</td>
+	</tr>
+	{$form.render_table}
+	<tr>
+		<td>&nbsp;</td>
+		<td><input type="submit" value="Actualizar perfil"/> | <a href="{url 'Registro_Views::dashboard'}">Cancelar</a>
+		</td>
+	</tr>
+</table>
+</form>
+{/block}

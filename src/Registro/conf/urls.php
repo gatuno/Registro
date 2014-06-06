@@ -85,6 +85,13 @@ $ctl[] = array (
 );
 
 $ctl[] = array (
+	'regex' => '#^/dashboard/update/$#',
+	'base' => $base,
+	'model' => 'Registro_Views',
+	'method' => 'actualizar',
+);
+
+$ctl[] = array (
 	'regex' => '#^/admin/$#',
 	'base' => $base,
 	'model' => 'Registro_Views',

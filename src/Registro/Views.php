@@ -245,4 +245,28 @@ class Registro_Views {
 		                                         'form' => $form),
 		                                         $request);
 	}
+	
+	public $actualizar_precond = array ('Gatuf_Precondition::loginRequired');
+	public function actualizar ($request, $match) {
+		$extra = array ('user' => $request->user);
+		
+		if ($request->method == 'POST') {
+			$form = new Registro_Form_Usuario_Actualizar (array_merge ($request->POST, $request->FILES), $extra);
+			
+			if ($form->isValid ()) {
+				$form->save ();
+				
+				$url = Gatuf_HTTP_URL_urlForView ('Registro_Views::dashboard');
+				
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		} else {
+			$form = new Registro_Form_Usuario_Actualizar (null, $extra);
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse ('registro/user/actualizar.html',
+		                                         array ('page_title' => 'Actualizar Perfil',
+		                                                'form' => $form),
+		                                         $request);
+	}
 }
