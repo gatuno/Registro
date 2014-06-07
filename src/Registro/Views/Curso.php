@@ -154,6 +154,16 @@ class Registro_Views_Curso {
 			return new Gatuf_HTTP_Response_Redirect ($url);
 		}
 		
+		if ($curso->requiere_ife && $request->user->ife == '') {
+			$request->user->setMessage (2, 'El curso requiere que subas tu credencial IFE antes de matricularte. Puedes subir esta información desde tu Perfil');
+			return new Gatuf_HTTP_Response_Redirect ($url);
+		}
+		
+		if ($curso->requiere_curp && $request->user->curp == '') {
+			$request->user->setMessage (2, 'El curso requiere que subas tu Curp antes de matricularte. Puedes subir esta información desde tu Perfil');
+			return new Gatuf_HTTP_Response_Redirect ($url);
+		}
+		
 		$curso->setAssoc ($request->user);
 		
 		$request->user->setMessage (1, 'Bienvenido al curso "'.$curso->titulo.'"');

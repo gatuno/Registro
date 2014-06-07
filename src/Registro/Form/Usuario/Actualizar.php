@@ -7,7 +7,7 @@ class Registro_Form_Usuario_Actualizar extends Gatuf_Form {
 		$this->user = $extra['user'];
 		
 		$upload_path = Gatuf::config ('user_data_upload');
-		$curp_filename = sprintf ('%s/curp_%%s', $this->user->login);
+		$curp_filename = sprintf ('%s/curp_%s_%s_%%s', $this->user->login, $this->user->first_name, $this->user->last_name);
 		$this->fields['attachment_curp'] = new Gatuf_Form_Field_File (
 			array (
 				'required' => false,
@@ -29,7 +29,7 @@ class Registro_Form_Usuario_Actualizar extends Gatuf_Form {
 				'widget' => 'Gatuf_Form_Widget_CheckboxInput',
 		));
 		
-		$ife_filename = sprintf ('%s/ife_%%s', $this->user->login);
+		$ife_filename = sprintf ('%s/ife_%s_%s_%%s', $this->user->login, $this->user->first_name, $this->user->last_name);
 		$this->fields['attachment_ife'] = new Gatuf_Form_Field_File (
 			array (
 				'required' => false,
@@ -59,6 +59,34 @@ class Registro_Form_Usuario_Actualizar extends Gatuf_Form {
 			throw new Gatuf_Form_Invalid('Por razones de seguridad, no puedes subir un archivo con esta extensión');
 		}
 		return $this->cleaned_data['attachment_curp'];
+	}
+	
+	function clean_borrar_curp () {
+		$registrados = $this->user->get_cursos_list ();
+		
+		if ($this->cleaned_data['borrar_curp']) {
+			foreach ($registrados as $curso) {
+				if ($curso->requiere_curp) {
+					throw new Gatuf_Form_Invalid ('No puedes eliminar tu Curp porque estás matriculado en un curso que requiere este dato');
+				}
+			}
+		}
+		
+		return $this->cleaned_data['borrar_curp'];
+	}
+	
+	function clean_borrar_ife () {
+		$registrados = $this->user->get_cursos_list ();
+		
+		if ($this->cleaned_data['borrar_ife']) {
+			foreach ($registrados as $curso) {
+				if ($curso->requiere_ife) {
+					throw new Gatuf_Form_Invalid ('No puedes eliminar tu IFE porque estás matriculado en un curso que requiere este dato');
+				}
+			}
+		}
+		
+		return $this->cleaned_data['borrar_ife'];
 	}
 	
 	function clean_attachment_ife () {

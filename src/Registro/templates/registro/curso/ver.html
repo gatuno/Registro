@@ -9,6 +9,17 @@
 	<p><a href="{url 'Registro_Views_Curso::editar', $curso.id}">Actualizar curso</a></p>
 	<p><a href="{url 'Registro_Views_Curso::verLista', $curso.id}">Ver listas</a></p>
 {/if}
+{if $curso.requiere_ife || $curso.requiere_curp}
+<h2>Requisitos especiales</h2>
+<p>{if $curso.requiere_ife && $curso.requiere_curp}
+	<strong>Este curso requiere que subas tu IFE y tu Curp antes de matricularte.</strong>
+{elseif $curso.requiere_ife}
+	<strong>Este curso requiere que subas tu IFE antes de matricularte.</strong>
+{else}
+	<strong>Este curso requiere que subas tu Curp antes de matricularte.</strong>
+{/if}
+Puedes subir esta información desde tu <a href="{url 'Registro_Views::dashboard'}">Perfil</a></p>
+{/if}
 <h2>Ponente</h2>
 <p>{$curso.get_ponente}. <strong>Correo de contacto</strong>: {mailhide $curso.contacto}</p>
 <h2>Horarios</h2>
